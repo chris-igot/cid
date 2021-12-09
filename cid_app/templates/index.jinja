@@ -1,0 +1,128 @@
+{% extends "base.jinja" %} {% block title %}CID - Login/Register{% endblock %} {% block content
+%}
+<div class="row">
+  <h2 class="text-center mb-4">Welcome!</h2>
+</div>
+<div class="row">
+  <div class="col-12 col-md-6 ps-md-1 ps-lg-5">
+    <form
+      class="border border-secondary rounded p-2"
+      action="/register/submit"
+      method="post"
+    >
+      <h3>Register</h3>
+      <div class="mb-2">
+        <label for="first_name" class="form-label mb-0">First Name</label>
+        <input
+          type="text"
+          name="first_name"
+          id="first_name"
+          class="form-control"
+        />
+        {% with
+        messages=get_flashed_messages(category_filter=["registration_error_first_name"])
+        %} {% for msg in messages %}
+        <small class="text-danger">{{ msg }}</small
+        ><br />
+        {% endfor %} {% endwith %}
+      </div>
+      <div class="mb-2">
+        <label for="last_name" class="form-label mb-0">Last Name</label>
+        <input
+          type="text"
+          name="last_name"
+          id="last_name"
+          class="form-control"
+        />
+        {% with
+        messages=get_flashed_messages(category_filter=["registration_error_last_name"])
+        %} {% for msg in messages %}
+        <small class="text-danger">{{ msg }}</small
+        ><br />
+        {% endfor %} {% endwith %}
+      </div>
+      <div class="mb-2">
+        <label for="email" class="form-label mb-0">Email</label>
+        <input type="email" name="email" id="email" class="form-control" />
+        {% with
+        messages=get_flashed_messages(category_filter=["registration_error_email"])
+        %} {% for msg in messages %}
+        <small class="text-danger">{{ msg }}</small
+        ><br />
+        {% endfor %} {% endwith %}
+      </div>
+      <div class="mb-2">
+        <label for="password" class="form-label mb-0">Password</label>
+        <input
+          type="password"
+          name="password"
+          id="password"
+          class="form-control"
+        />
+        {% with
+        messages=get_flashed_messages(category_filter=["registration_error_password"])
+        %} {% for msg in messages %}
+        <small class="text-danger">{{ msg }}</small
+        ><br />
+        {% endfor %} {% endwith %}
+      </div>
+      <div class="mb-5">
+        <label for="confpassword" class="form-label mb-0"
+          >Confirm Password</label
+        >
+        <input
+          type="password"
+          name="confpassword"
+          id="confpassword"
+          class="form-control"
+        />
+        {% with
+        messages=get_flashed_messages(category_filter=["registration_error_confpassword"])
+        %} {% for msg in messages %}
+        <small class="text-danger">{{ msg }}</small
+        ><br />
+        {% endfor %} {% endwith %}
+      </div>
+      {% with
+      messages=get_flashed_messages(category_filter=["registration_messages"])
+      %} {% for msg in messages %}
+      <small class="text-{{'success' if msg[:7] == 'Success' else 'danger'}}">{{
+        msg
+      }}</small
+      ><br />
+      {% endfor %} {% endwith %}
+      <button type="submit" class="btn btn-primary">Register</button>
+    </form>
+  </div>
+  <div class="col-12 col-md-6 pe-md-1 pe-lg-5 mb-2 mb-md-0">
+    <form
+      class="border border-secondary rounded p-2"
+      action="/login/submit"
+      method="post"
+    >
+      <h3>Login</h3>
+      <div class="mb-2">
+        <label for="email" class="form-label mb-0">Email</label>
+        <input type="email" name="email" id="email" class="form-control" />
+      </div>
+      <div class="mb-5">
+        <label for="password" class="form-label mb-0">Password</label>
+        <input
+          type="password"
+          name="password"
+          id="password"
+          class="form-control"
+        />
+      </div>
+      {% with messages=get_flashed_messages(category_filter=["login_messages"])
+      %} {% for msg in messages %}
+      <small class="text-danger">{{ msg }}</small
+      ><br />
+      {% endfor %} {% endwith %}
+      <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+  </div>
+  {# <a href="/cid/user?id=w1">click</a> #}
+  {{session["request"]}}
+</div>
+{% endblock %}

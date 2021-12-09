@@ -1,0 +1,15 @@
+{% extends "base.jinja" %}
+{% block title %}CID - Welcome{% endblock %}
+{% block content%}
+<div class="row">
+  <h2 class="text-center mb-4">Welcome!</h2>
+</div>
+<div class="row">
+  <div class="col-12 col-md-6 ps-md-1 ps-lg-5">
+    <h4 class="text-center mb-4">You are logged in</h4>
+    <p class="text-center mb-4">{{session["user"]}}</p>
+    <p class="text-center mb-4">{{session["request"]}}</p>
+    <div><a class="btn btn-danger" href="/logout">Logout</a></div>
+  </div>
+</div>
+{% endblock %}
