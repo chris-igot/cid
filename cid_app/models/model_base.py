@@ -41,10 +41,10 @@ class ModelBase():
             connectToMySQL(cls.db_name).query_db(query,data)
             return cls.id
         else:
-            col_str = ",".join(attr_list)
+            col_str = "`,`".join(attr_list)
             val_str = ",".join([f"%({col})s" for col in attr_list])
 
-            query = f"INSERT INTO {cls.table_name} ({col_str}) VALUES ({val_str});"
+            query = f"INSERT INTO {cls.table_name} (`{col_str}`) VALUES ({val_str});"
 
             # print('insert',query)
             return connectToMySQL(cls.db_name).query_db(query,data)

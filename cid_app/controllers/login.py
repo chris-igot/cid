@@ -21,7 +21,7 @@ def login_submit():
     form_data=dict(request.form)
     valid = validate(form_data,login_checks,"login")
     if valid:
-        user = User.get_user_hash(form_data=form_data)
+        user = User.find_email(form_data=form_data)
         if bcrypt.check_password_hash(user["password"],request.form["password"]):
             del user["password"]
             session["user"] = {
@@ -57,7 +57,7 @@ def register_submit():
         form_data["password"] = bcrypt.generate_password_hash(form_data["password"])
 
         session["user"] = {
-            "id": User.create_user(form_data),
+            "id": User.save(form_data),
             "first_name":form_data["first_name"],
             "last_name":form_data["last_name"],
             "email":form_data["email"],

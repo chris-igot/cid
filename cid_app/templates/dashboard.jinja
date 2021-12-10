@@ -1,7 +1,7 @@
 {% extends "loggedin_base.jinja" %}
-{% block toptext %}PyPies by {{session["first_name"]}}{% endblock  %}
+{% block toptext %}CID - Administration{% endblock  %}
 {% block navlinks %}
-<a href="/pies" class="nav-link active">Pie Derby</a>
+<a href="/admin/apps/add" class="nav-link active">Add App</a>
 {% endblock  %}
 
 {% block content %}
@@ -10,66 +10,29 @@
         <table class="table">
             <thead>
                 <tr>
+                    <th>ID</th>
                     <th>Name</th>
-                    <th>Actions</th>
+                    <th>Callback</th>
+                    <th>Key</th>
                 </tr>
             </thead>
             <tbody>
-            {% if pies %}
-                {% for pie in pies %}
+            {% if apps %}
+                {% for app in apps %}
                     <tr>
-                        <td>{{pie.name}}</td>
-                        <td>
-                            <a href="/edit/{{pie.pie_id}}">edit</a>
-                            <a href="/exterminate/{{pie.pie_id}}">delete</a>
-                        </td>
+                        <td>{{app.id}}</td>
+                        <td>{{app.name}}</td>
+                        <td>{{app.callback}}</td>
+                        <td>{{app.key}}</td>
                     </tr>
                 {% endfor %}
             {% else %}
                 <tr>
-                    <td>No Pies</td>
+                    <td>No Apps/Websites</td>
                 </tr>
             {% endif %}
             </tbody>
         </table>
-    </div>
-    <div class="col-12 col-md-6">
-        <form class="border border-secondary rounded p-2" action="/create_pie/submit" method="post">
-			<h3>Create New PyPie</h3>
-			<div class="mb-2">
-				<label for="name" class="form-label mb-0">Name</label>
-				<input type="text" name="name" id="name" class="form-control">
-                {% with messages=get_flashed_messages(category_filter=["pie_error_name"]) %}
-                    {% for msg in messages %}
-                        <small class="text-danger">{{msg}}</small><br>
-                    {% endfor %}
-                {% endwith %}
-			</div>
-			<div class="mb-2">
-				<label for="filling" class="form-label mb-0">Filling</label>
-				<input type="text" name="filling" id="filling" class="form-control">
-                {% with messages=get_flashed_messages(category_filter=["pie_error_filling"]) %}
-                    {% for msg in messages %}
-                        <small class="text-danger">{{msg}}</small><br>
-                    {% endfor %}
-                {% endwith %}
-			</div>
-			<div class="mb-2">
-				<label for="crust" class="form-label mb-0">crust</label>
-				<input type="text" name="crust" id="crust" class="form-control">
-                {% with messages=get_flashed_messages(category_filter=["pie_error_crust"]) %}
-                    {% for msg in messages %}
-                        <small class="text-danger">{{msg}}</small><br>
-                    {% endfor %}
-                {% endwith %}
-			</div>
-			{% with messages=get_flashed_messages(category_filter=["pie_messages"]) %}
-					{% for msg in messages %}
-						<small class="text-danger">{{msg}}</small><br>
-					{% endfor %}
-			{% endwith %}
-			<button type="submit" class="btn btn-primary">Add Pie</button>
-		</form>
     </div>
 </div>
 {% endblock  %}

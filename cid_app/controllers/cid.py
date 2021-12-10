@@ -43,7 +43,7 @@ def auth_app():
         site = AppModel.__find_cols__({"id":request.args["app_id"], "key":request.args["key"]})
         print("\n\nTHIS IS also HERE\n\n",auth_code[0],site)
         if((auth_code and site)):
-            user = User.get_user(auth_code[0].user_id)
+            user = User.find_id(auth_code[0].user_id)
             payload["status"] = 0
             payload["token"] = {
                 "id":user["id"],

@@ -1,0 +1,19 @@
+{% extends "base.jinja" %}
+{% block title %}CID - Administration{% endblock  %}
+{% block navigation %}
+<nav class="navbar navbar-expand-sm navbar-light bg-light">
+	<div class="container-fluid">
+		<span class="navbar-brand">{% block toptext %}{% endblock  %}</span>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="navbarNavAltMarkup">Menu</button>
+		<div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+			<div class="navbar-nav">
+				{% block navlinks %}
+				
+				{% endblock  %}
+			</div>
+		</div>
+
+		<a href="/admin/logout" class="btn btn-sm btn-outline-secondary ms-5">Logout</a>
+	</div>
+</nav>
+{% endblock  %}

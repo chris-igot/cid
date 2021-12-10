@@ -20,10 +20,10 @@ class AuthCode(ModelBase):
             "app_id": app_id,
             "user_id": user_id,
         }
-        cls.__upsert__(data)
+        cls.save(data)
         return data["code"]
     @classmethod
-    def __upsert__(cls,data):
+    def save(cls,data):
         # print("auth CLASS", list(cls({}).__dict__.keys()))
         instance_attrs = [attr for attr in list(cls({}).__dict__.keys()) if not attr.endswith("_")]
         attr_list = [attr for attr in data.keys() if data[attr] != None and attr in instance_attrs]
@@ -37,10 +37,10 @@ class AuthCode(ModelBase):
 
             return connectToMySQL(cls.db_name).query_db(query,data)
         else:
-            col_str = ",".join(attr_list)
+            col_str = "`,`".join(attr_list)
             val_str = ",".join([f"%({col})s" for col in attr_list])
 
-            query = f"INSERT INTO {cls.table_name} ({col_str}) VALUES ({val_str});"
+            query = f"INSERT INTO {cls.table_name} (`{col_str}`) VALUES ({val_str});"
 
             # print('insert',query,data)
             return connectToMySQL(cls.db_name).query_db(query,data)
