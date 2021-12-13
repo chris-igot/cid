@@ -16,7 +16,7 @@ class Admin(ModelBase):
     @classmethod
     def find_email(cls,form_data):
         data = {"email":form_data["email"]}
-        return cls.__find_cols__(data)[0]
+        return cls.__find_cols__(data)[0] if len(cls.__find_cols__(data)) > 0 else None
     @classmethod
     def save(cls,form_data):
         return cls.__upsert__(form_data)

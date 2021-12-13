@@ -13,14 +13,17 @@ class User():
             "id":id
         }
         query = "SELECT * FROM users WHERE id = %(id)s;"
-        result = connectToMySQL(DB).query_db(query,data)[0]
-        result.pop('password',None)
-        return result
+        results = connectToMySQL(DB).query_db(query,data)
+        if(results):
+            results[0].pop('password',None)
+            return results[0]
+        else:
+            return None
     @classmethod
     def find_email(cls,form_data):
         query = "SELECT * FROM users WHERE email = %(email)s;"
-        result = connectToMySQL(DB).query_db(query,form_data)[0]
-        return result
+        results = connectToMySQL(DB).query_db(query,form_data)
+        return results[0] if len(results) > 0 else None
     
     @classmethod
     def save(cls,form_data):

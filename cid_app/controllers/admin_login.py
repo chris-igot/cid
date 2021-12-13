@@ -17,7 +17,7 @@ def admin_login_submit():
     valid = validate(form_data,login_checks,"login")
     if valid:
         admin = Admin.find_email(form_data=form_data)
-        if bcrypt.check_password_hash(admin.password,request.form["password"]):
+        if admin and bcrypt.check_password_hash(admin.password,request.form["password"]):
             admin.password = None
             session["admin"] = {
                 "id": admin.id,

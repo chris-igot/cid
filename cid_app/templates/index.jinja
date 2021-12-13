@@ -116,13 +116,10 @@
       </div>
       {% with messages=get_flashed_messages(category_filter=["login_messages"])
       %} {% for msg in messages %}
-      <small class="text-danger">{{ msg }}</small
-      ><br />
+      <p><small class="text-danger">{{ msg }}</small></p>
       {% endfor %} {% endwith %}
       <button type="submit" class="btn btn-primary">Login</button>
     </form>
   </div>
-  {# <a href="/cid/user?id=w1">click</a> #}
-  {{session["request"]}}
 </div>
 {% endblock %}

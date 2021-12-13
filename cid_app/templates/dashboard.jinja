@@ -6,24 +6,44 @@
 
 {% block content %}
 <div class="row">
-    <div class="col-12 col-md-6">
+    <div class="col col-md-6">
         <table class="table">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th class="pe-5">ID <span class="pe-5"></span><span class="pe-5"></span></th>
                     <th>Name</th>
                     <th>Callback</th>
-                    <th>Key</th>
+                    <th class="pe-5">Actions <span class="pe-5"></span><span class="pe-5"></th>
                 </tr>
             </thead>
             <tbody>
             {% if apps %}
                 {% for app in apps %}
                     <tr>
-                        <td>{{app.id}}</td>
-                        <td>{{app.name}}</td>
-                        <td>{{app.callback}}</td>
-                        <td>{{app.key}}</td>
+                        <td><span class='border border-dark rounded p-1'><small class='font-monospace'>{{app.id}}</small></span></td>
+                        <td class="text-wrap">{{app.name}}</td>
+                        <td class="text-break">{{app.callback}}</td>
+                        <td>
+                            <div>
+                            <a href="/admin/apps/{{app.id}}/edit" class="me-3">edit</a>
+                            <a href="/admin/apps/{{app.id}}/genkeyask" class="">get new key</a>
+                            </div>
+                            {% with messages=get_flashed_messages(category_filter=[app.id+"gen_key_confirm"]) %}
+                                {% for msg in messages %}
+                                    <p class="fw-bold">{{msg}}</p>
+                                {% endfor %}
+                            {% endwith %}
+                            {% with messages=get_flashed_messages(category_filter=[app.id+"gen_key_warning"]) %}
+                                {% for msg in messages %}
+                                    <p class="fw-bold">{{msg}}</p>
+                                {% endfor %}
+                            {% endwith %}
+                            {% with messages=get_flashed_messages(category_filter=[app.id+"gen_key"]) %}
+                                {% for msg in messages %}
+                                    {{msg}}
+                                {% endfor %}
+                            {% endwith %}
+                        </td>
                     </tr>
                 {% endfor %}
             {% else %}

@@ -6,7 +6,7 @@ registration_checks = {
 			"category": "registration_error_email"
 		},
 		{
-			"regex": r"^[\w\.-]+@[\w\.-]+\.[a-zA-Z]+$",
+			"regex": r"^[\w\d\.-]+@[\w\d\.-]+\.[a-zA-Z]+$",
 			"error": "Please enter valid email address",
 			"category": "registration_error_email"
 		}
@@ -50,26 +50,24 @@ login_checks = {
 	]
 }
 
-pie_checks = {
+app_checks = {
 	"name":[
 		{
-			"regex": r".{1,100}",
-			"error": "Name must be between 2 and 200 characters",
-			"category": "pie_error_name"
+			"regex": r".{2,100}",
+			"error": "Name must be between 2 and 100 characters",
+			"category": "app_error_name"
 		}
 	],
-	"filling":[
+	"callback":[
 		{
-			"regex": r".{1,100}",
-			"error": "Filling must be between 20 and 1000 characters",
-			"category": "pie_error_filling"
-		}
-	],
-	"crust":[
+			"regex": r"https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}(\.[a-zA-Z0-9()]{1,6})*\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)",
+			"error": "Must be a valid url",
+			"category": "app_error_callback"
+		},
 		{
-			"regex": r".{1,100}",
-			"error": "Crust must be between 20 and 10000 characters",
-			"category": "pie_error_crust"
-		}
+			"regex": r".{1,1000}",
+			"error": "Must be a max of 100 characters",
+			"category": "app_error_callback"
+		},
 	]
 }

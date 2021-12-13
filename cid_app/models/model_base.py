@@ -39,7 +39,7 @@ class ModelBase():
 
             # print('update',query)
             connectToMySQL(cls.db_name).query_db(query,data)
-            return cls.id
+            return data["id"]
         else:
             col_str = "`,`".join(attr_list)
             val_str = ",".join([f"%({col})s" for col in attr_list])

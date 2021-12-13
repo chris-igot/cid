@@ -3,6 +3,7 @@ from flask import render_template, session, request, redirect,flash
 from cid_app.models.user import User
 from flask_bcrypt import Bcrypt
 from cid_app.utilities.validation import validate
+from cid_app.utilities.permission_decorators import login_required
 from cid_app.config.validation_checks import registration_checks,login_checks
 bcrypt = Bcrypt(app)
 
@@ -10,8 +11,9 @@ bcrypt = Bcrypt(app)
 def login():
     return render_template('index.jinja')
 @app.route('/welcome')
+@login_required
 def welcome():
-    return render_template('landing.jinja')
+    return render_template('user_status.jinja')
 
 
 
@@ -21,8 +23,8 @@ def login_submit():
     form_data=dict(request.form)
     valid = validate(form_data,login_checks,"login")
     if valid:
-        user = User.find_email(form_data=form_data)
-        if bcrypt.check_password_hash(user["password"],request.form["password"]):
+        user = User.find_email(form_data)
+        if user and  bcrypt.check_password_hash(user["password"],request.form["password"]):
             del user["password"]
             session["user"] = {
                 "id": user["id"],
@@ -74,6 +76,8 @@ def register_submit():
 
 @app.route('/logout')
 def logout():
-    print(request.referrer)
     session.clear()
-    return redirect('/')
+    if(request.args["cb"]):
+        return redirect(request.args["cb"])
+    else:
+        return redirect('/')

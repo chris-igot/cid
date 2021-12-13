@@ -1,19 +1,24 @@
 from flask import flash
 import re
 
-def validate(form_data,checks,form_name="form",strict=True):
+def validate(data,all_checks,form_name="form",strict=True,func=flash,result={}):
+	data = dict(data)
 	valid = True
-	for key, val in checks.items():
-		if key in form_data:
-			for check in val:
+	for key, key_checks in all_checks.items():
+		result[key] = None
+		if key in data:
+			for check in key_checks:
 				regex = re.compile(check["regex"])
-				if not regex.match(form_data[key]):
+				if regex.match(data[key]):
+					result[key] = True
+				else:
 					valid = False
-					print(check["error"],check["category"])
-					flash(check["error"],check["category"])
-		elif strict and key not in form_data:
+					result[key] = False
+					# print(check["error"],check["category"])
+					func(check["error"],check["category"])
+		elif strict and key not in data:
 			valid = False
-			print(f"Field {key} not submitted",form_name+"_messages")
-			flash(f"Field {key} not submitted",form_name+"_messages")
+			# print(f"Field {key} not submitted",form_name+"_messages")
+			func(f"Field {key} not submitted",form_name+"_messages")
 	
 	return valid

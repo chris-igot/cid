@@ -11,14 +11,34 @@ class AuthCode(ModelBase):
         self.code = data["code"] if "code" in data else None
         self.app_id = data["app_id"] if "app_id" in data else None
         self.user_id = data["user_id"] if "user_id" in data else None
+        self.status = data["status"] if "status" in data else None
         self.website_ = None
         self.user_ = None
+    @classmethod
+    def find_code(cls,code,app_id):
+        data = {
+            "code":code,
+            "app_id":app_id
+        }
+        results = cls.__find_cols__(data)
+        return results[0] if len(results) > 0 else None
     @classmethod
     def generate_code(cls,user_id,app_id):
         data = {
             "code": secrets.token_urlsafe(16),
             "app_id": app_id,
             "user_id": user_id,
+            "status": "new"
+        }
+        cls.save(data)
+        return data["code"]
+    @classmethod
+    def generate_code(cls,user_id,app_id):
+        data = {
+            "code": secrets.token_urlsafe(16),
+            "app_id": app_id,
+            "user_id": user_id,
+            "status": "new"
         }
         cls.save(data)
         return data["code"]
@@ -32,9 +52,6 @@ class AuthCode(ModelBase):
             col_val_str = ",".join([f"`{col}`=%({col})s" for col in attr_list if col != "user_id" and col != "app_id"])
 
             query = f"UPDATE {cls.table_name} SET {col_val_str} WHERE user_id = %(user_id)s and app_id = %(app_id)s;"
-
-            # print('update',query)
-
             return connectToMySQL(cls.db_name).query_db(query,data)
         else:
             col_str = "`,`".join(attr_list)
