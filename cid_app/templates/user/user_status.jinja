@@ -1,13 +1,11 @@
-{% extends "/base.jinja" %} {% block title %}CID - Welcome{% endblock %} {% block
+{% extends "/user/loggedin_base.jinja" %} {% block title %}CID - Welcome{% endblock %} {% block
 content%}
 <div class="row">
-  <h2 class="text-center mb-4">
-    Welcome, {{ session["user"]["first_name"] }}!
-  </h2>
+  <h4 class="text-center mb-4">Your information</h4>
 </div>
 <div class="row">
-  <div class="col-12 col-md-6 ps-md-1 ps-lg-5">
-    <h4 class="text-center mb-4">Your information</h4>
+  <div class="d-flex justify-content-center align-items-center">
+    <div class="col-10 col-sm-8 col-md-6 col-lg-4">
     <table class="table">
       <tr>
         <td>Name</td>
@@ -20,7 +18,8 @@ content%}
         <td>{{ session["user"]["email"] }}</td>
       </tr>
     </table>
-    <div><a class="btn btn-danger" href="/logout">Logout</a></div>
+    </div>
+
   </div>
 </div>
 {% endblock %}

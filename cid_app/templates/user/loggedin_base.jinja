@@ -1,5 +1,5 @@
 {% extends "/base.jinja" %}
-{% block title %}CID - Administration{% endblock  %}
+{% block title %}Welcome page{% endblock  %}
 {% block navigation %}
 <nav class="navbar navbar-expand-sm navbar-light bg-light">
 	<div class="container-fluid">
@@ -8,7 +8,7 @@
 		<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 			<div class="navbar-nav">
 				<li class="nav-item">
-					<a class="nav-link active" aria-current="page" href="/admin/dashboard">Dashboard</a>
+					<a class="nav-link active" aria-current="page" href="/welcome">Home</a>
 				</li>
 				{% block navlinks %}
 				
@@ -16,7 +16,7 @@
 			</div>
 		</div>
 
-		<a href="/admin/logout" class="btn btn-sm btn-outline-secondary ms-5">Logout</a>
+		<a href="/logout" class="btn btn-sm btn-outline-secondary ms-5">Logout</a>
 	</div>
 </nav>
 {% endblock  %}

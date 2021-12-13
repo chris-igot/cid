@@ -1,24 +1,23 @@
 {% extends "/base.jinja" %} {% block title %}CID - Login/Register{% endblock %} {% block content
 %}
+
 <div class="row">
-  <h2 class="text-center mb-4">Welcome!</h2>
-</div>
-<div class="row">
-  <div class="col-12 col-md-6 ps-md-1 ps-lg-5">
+  <div class="d-flex justify-content-center align-items-center">
     <form
-      class="border border-secondary rounded p-2"
+      class="border rounded p-2 my-5 col-10 col-sm-8 col-md-6 col-lg-4 shadow"
       action="/register/submit"
       method="post"
     >
-      <h3>Register</h3>
-      <div class="mb-2">
-        <label for="first_name" class="form-label mb-0">First Name</label>
+      <h3 class="mt-2 mb-3">Register with CID</h3>
+      <div class="mb-2 form-floating">
         <input
           type="text"
           name="first_name"
           id="first_name"
           class="form-control"
+          placeholder="placeholder"
         />
+        <label for="first_name" class="form-label mb-0">First Name</label>
         {% with
         messages=get_flashed_messages(category_filter=["registration_error_first_name"])
         %} {% for msg in messages %}
@@ -26,14 +25,15 @@
         ><br />
         {% endfor %} {% endwith %}
       </div>
-      <div class="mb-2">
-        <label for="last_name" class="form-label mb-0">Last Name</label>
+      <div class="mb-2 form-floating">
         <input
           type="text"
           name="last_name"
           id="last_name"
           class="form-control"
+          placeholder="placeholder"
         />
+        <label for="last_name" class="form-label mb-0">Last Name</label>
         {% with
         messages=get_flashed_messages(category_filter=["registration_error_last_name"])
         %} {% for msg in messages %}
@@ -41,9 +41,9 @@
         ><br />
         {% endfor %} {% endwith %}
       </div>
-      <div class="mb-2">
+      <div class="mb-2 form-floating">
+        <input type="email" name="email" id="email" class="form-control" placeholder="placeholder"/>
         <label for="email" class="form-label mb-0">Email</label>
-        <input type="email" name="email" id="email" class="form-control" />
         {% with
         messages=get_flashed_messages(category_filter=["registration_error_email"])
         %} {% for msg in messages %}
@@ -51,14 +51,15 @@
         ><br />
         {% endfor %} {% endwith %}
       </div>
-      <div class="mb-2">
-        <label for="password" class="form-label mb-0">Password</label>
+      <div class="mb-2 form-floating">
         <input
           type="password"
           name="password"
           id="password"
           class="form-control"
+          placeholder="placeholder"
         />
+        <label for="password" class="form-label mb-0">Password</label>
         {% with
         messages=get_flashed_messages(category_filter=["registration_error_password"])
         %} {% for msg in messages %}
@@ -66,16 +67,17 @@
         ><br />
         {% endfor %} {% endwith %}
       </div>
-      <div class="mb-5">
-        <label for="confpassword" class="form-label mb-0"
-          >Confirm Password</label
-        >
+      <div class="mb-5 form-floating">
         <input
           type="password"
           name="confpassword"
           id="confpassword"
           class="form-control"
+          placeholder="placeholder"
         />
+        <label for="confpassword" class="form-label mb-0"
+          >Confirm Password</label
+        >
         {% with
         messages=get_flashed_messages(category_filter=["registration_error_confpassword"])
         %} {% for msg in messages %}
