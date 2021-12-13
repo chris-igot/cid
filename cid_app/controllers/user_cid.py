@@ -52,16 +52,17 @@ def auth_app():
         print("\n\nTHIS IS also HERE\n\n",auth_code,site)
         if((auth_code and site and auth_code.status == "new" and bcrypt.check_password_hash(site.key,data["key"]))):
             user = User.find_id(auth_code.user_id)
+            user.password = None
             payload["status"] = 0
             payload["token"] = {
-                "id":user["id"],
-                "first_name":user["first_name"],
-                "last_name":user["last_name"],
-                "email":user["email"]
+                "id":user.id,
+                "first_name":user.first_name,
+                "last_name":user.last_name,
+                "email":user.email
             }
             updated_data = {
                 "code": data["auth_code"],
-                "user_id":user["id"],
+                "user_id":user.id,
                 "app_id": data["app_id"],
                 "status": "used"
             }
