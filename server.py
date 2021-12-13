@@ -1,6 +1,6 @@
 from cid_app import app
-from cid_app.controllers import login
-from cid_app.controllers import cid
+from cid_app.controllers import user_login
+from cid_app.controllers import user_cid
 from cid_app.controllers import admin_login
 from cid_app.controllers import admin_cid
 

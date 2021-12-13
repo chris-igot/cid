@@ -11,12 +11,12 @@ bcrypt = Bcrypt(app)
 @app.route('/admin/dashboard')
 @admin_access_required
 def dashboard():
-    return render_template('dashboard.jinja',apps=AppModel.find_admin_id(session["admin"]["id"]))
+    return render_template('/admin/dashboard.jinja',apps=AppModel.find_admin_id(session["admin"]["id"]))
 
 @app.route('/admin/apps/add')
 @admin_access_required
 def add_app():
-    return render_template("add_app.jinja")
+    return render_template("/admin/add_app.jinja")
 @app.route('/admin/apps/add', methods=["POST"])
 @admin_access_required
 def add_app_submit():
@@ -39,7 +39,7 @@ def add_app_submit():
 @admin_access_required
 @view_edit_access
 def edit_app(app_id,app):
-    return render_template("edit_app.jinja",app=AppModel.find_id(app_id))
+    return render_template("/admin/edit_app.jinja",app=AppModel.find_id(app_id))
 
 @app.route('/admin/apps/<string:app_id>/edit', methods=["POST"])
 @admin_access_required

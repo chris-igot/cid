@@ -6,9 +6,16 @@ from cid_app.utilities.validation import validate
 from cid_app.config.validation_checks import registration_checks,login_checks
 bcrypt = Bcrypt(app)
 
-@app.route('/admin/')
+@app.route('/admin')
+def admin_root():
+    if "admin" in session:
+        return redirect("/admin/dashboard")
+    else:
+        return redirect("/admin/login")
+
+@app.route('/admin/login')
 def admin_login():
-    return render_template('admin_index.jinja')
+    return render_template('admin/admin_login.jinja')
 
 @app.route('/admin/login/submit',methods=["POST"])
 def admin_login_submit():
@@ -34,7 +41,7 @@ def admin_login_submit():
 
 @app.route('/admin/register')
 def admin_register():
-    return render_template('register.jinja')
+    return render_template('admin/admin_register.jinja')
 
 @app.route('/admin/register/submit',methods=["POST"])
 def admin_register_submit():
