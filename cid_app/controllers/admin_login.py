@@ -37,7 +37,7 @@ def admin_login_submit():
             flash("bad email/password","login_messages")
             return redirect('/admin')
     else:
-        return redirect('/admin')
+        return redirect('/admin/login')
 
 @app.route('/admin/register')
 def admin_register():
@@ -62,7 +62,7 @@ def admin_register_submit():
         return redirect('/admin/dashboard')
     else:
         flash("invalid inputs","register_messages")
-        return redirect('/admin')
+        return redirect('/admin/register')
 
 @app.route('/admin/logout')
 def admin_logout():

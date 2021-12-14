@@ -46,9 +46,9 @@ def user_login_submit():
                 return redirect('/welcome')
         else:
             flash("bad email/password","login_messages")
-            return redirect('/')
+            return redirect('/login')
     else:
-        return redirect('/')
+        return redirect('/login')
 
 @app.route('/register')
 def user_register():
@@ -78,7 +78,7 @@ def user_register_submit():
             return redirect('/welcome')
     else:
         flash("invalid inputs","register_messages")
-        return redirect('/')
+        return redirect('/register')
 
 @app.route('/logout')
 def user_logout():
