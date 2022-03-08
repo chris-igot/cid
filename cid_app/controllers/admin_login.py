@@ -19,11 +19,12 @@ def admin_login():
 
 @app.route('/admin/login/submit',methods=["POST"])
 def admin_login_submit():
-    print(request.form)
     form_data=dict(request.form)
     valid = validate(form_data,login_checks,"login")
+
     if valid:
         admin = Admin.find_email(form_data=form_data)
+
         if admin and bcrypt.check_password_hash(admin.password,request.form["password"]):
             admin.password = None
             session["admin"] = {

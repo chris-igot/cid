@@ -14,11 +14,11 @@ def validate(data,all_checks,form_name="form",strict=True,func=flash,result={}):
 				else:
 					valid = False
 					result[key] = False
-					# print(check["error"],check["category"])
+
 					func(check["error"],check["category"])
 		elif strict and key not in data:
 			valid = False
-			# print(f"Field {key} not submitted",form_name+"_messages")
+
 			func(f"Field {key} not submitted",form_name+"_messages")
 	
 	return valid

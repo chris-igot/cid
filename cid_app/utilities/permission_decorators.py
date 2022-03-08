@@ -23,8 +23,6 @@ def admin_access_required(f):
 def view_edit_access(f):
 	@wraps(f)
 	def decorated_function(*args, **kwargs):
-		# print("ARGS",args)
-		# print("KWARGS",kwargs)
 		kwargs["app"] = AppModel.find_id(kwargs["app_id"])
 		if not kwargs["app"]:
 			app_id = kwargs["app_id"]

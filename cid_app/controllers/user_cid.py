@@ -14,25 +14,21 @@ bcrypt = Bcrypt(app)
 @app.route("/cid/user")
 @cross_origin()
 def auth():
-    # print(request.args)
     data = request.args
     valid = validate(data,cid_user,"cid_app",func=print)
     if(valid):
         if("user" in session):
                 site = AppModel.find_id(data["app_id"])
-                print(data)
+
                 if(site):
                     auth_code = AuthCode.generate_code(session["user"]["id"],site.id)
-                    # print("auth",session["user"]["id"])
                     return redirect(site.callback+f"?auth_code={auth_code}")
                 else:
                     abort(400,"app_id does not exist")
         else:
             session["request"] = {"app_id":data["app_id"]}
-            # print("not in session")
             return redirect("/")
     else:
-        # print("no website id", request.referrer)
         abort(400,"app_id unavailable")
 
 @app.route("/cid/app")
@@ -46,10 +42,8 @@ def auth_app():
     valid = validate(data,cid_app,"cid_app",func=print,result=validation_result)
     if(valid):
         site = AppModel.find_id(data["app_id"])
-        print("\n\nTHIS IS HERE\n\n",data,site.key)
         auth_code = AuthCode.find_code(data["auth_code"],data["app_id"])
 
-        print("\n\nTHIS IS also HERE\n\n",auth_code,site)
         if((auth_code and site and auth_code.status == "new" and bcrypt.check_password_hash(site.key,data["key"]))):
             user = User.find_id(auth_code.user_id)
             user.password = None
@@ -69,5 +63,5 @@ def auth_app():
             AuthCode.save(updated_data)
     else:
         payload["validation_result"] = validation_result
-    # print("PAYLOAD",payload)
+
     return jsonify(payload)

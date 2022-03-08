@@ -22,12 +22,11 @@ class MySQLConnection:
 		# the method to query the database
 
 	def query_db(self, query, data=None):
-		print("data",data)
 		with self.connection.cursor() as cursor:
 			try:
 				query = cursor.mogrify(query, data)
-				print("Running Query:", query)
 				executable = cursor.execute(query, data)
+
 				if query.lower().find("insert") >= 0:
 					# INSERT queries will return the ID NUMBER of the row inserted
 					self.connection.commit()
@@ -42,7 +41,7 @@ class MySQLConnection:
 					return executable
 			except Exception as e:
 				# if the query fails the method will return FALSE
-				print("Something went wrong", e)
+
 				flash("ERROR:"+str(e),"jsconsole-log")
 				return False
 			finally:

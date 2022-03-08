@@ -25,9 +25,9 @@ def welcome():
 
 @app.route('/login/submit',methods=["POST"])
 def user_login_submit():
-    print(request.form)
     form_data=dict(request.form)
     valid = validate(form_data,login_checks,"login")
+
     if valid:
         user = User.find_email(form_data)
         if user and  bcrypt.check_password_hash(user.password,request.form["password"]):
