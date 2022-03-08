@@ -6,10 +6,12 @@ class ModelBase():
     db_name = DB
     def __init__(self, data):
         self.id = data["id"] if "id" in data else None
+
     @classmethod
     def __find_id__(cls,id):
         query = f"SELECT * FROM {cls.table_name} WHERE id = %(id)s;"
         result = connectToMySQL(cls.db_name).query_db(query,{"id":id})
+
         return cls(result[0]) if len(result)>0 else None
     @classmethod
     def __find_cols__(cls, data):

@@ -30,6 +30,7 @@ def user_login_submit():
 
     if valid:
         user = User.find_email(form_data)
+
         if user and  bcrypt.check_password_hash(user.password,request.form["password"]):
             user.password = None
             session["user"] = {
@@ -38,8 +39,10 @@ def user_login_submit():
                 "last_name":user.last_name,
                 "email":user.email,
             }
+
             if "request" in session:
                 app_id = session["request"]["app_id"]
+
                 del session["request"]
                 return redirect("/cid/user?app_id="+app_id)
             else:
@@ -63,15 +66,16 @@ def user_register_submit():
             flash("Please check if password matches confirmation","registration_error_confpassword")
             return redirect('/')
         form_data["password"] = bcrypt.generate_password_hash(form_data["password"])
-
         session["user"] = {
             "id": User.save(form_data),
             "first_name":form_data["first_name"],
             "last_name":form_data["last_name"],
             "email":form_data["email"],
         }
+
         if "request" in session:
             app_id = session["request"]["app_id"]
+
             del session["request"]
             return redirect("/cid/user?app_id="+app_id)
         else:

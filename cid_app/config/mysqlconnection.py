@@ -34,6 +34,7 @@ class MySQLConnection:
 				elif query.lower().find("select") >= 0:
 					# SELECT queries will return the data from the database as a LIST OF DICTIONARIES
 					result = cursor.fetchall()
+
 					return result
 				else:
 					# UPDATE and DELETE queries will return nothing
@@ -41,7 +42,6 @@ class MySQLConnection:
 					return executable
 			except Exception as e:
 				# if the query fails the method will return FALSE
-
 				flash("ERROR:"+str(e),"jsconsole-log")
 				return False
 			finally:

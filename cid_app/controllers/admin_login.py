@@ -33,6 +33,7 @@ def admin_login_submit():
                 "last_name":admin.last_name,
                 "email":admin.email,
             }
+
             return redirect('/admin/dashboard')
         else:
             flash("bad email/password","login_messages")
@@ -53,13 +54,13 @@ def admin_register_submit():
             flash("Please check if password matches confirmation","registration_error_confpassword")
             return redirect('/admin')
         form_data["password"] = bcrypt.generate_password_hash(form_data["password"])
-
         session["admin"] = {
             "id": Admin.save(form_data),
             "first_name":form_data["first_name"],
             "last_name":form_data["last_name"],
             "email":form_data["email"],
         }
+
         return redirect('/admin/dashboard')
     else:
         flash("invalid inputs","register_messages")

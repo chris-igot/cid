@@ -16,17 +16,20 @@ bcrypt = Bcrypt(app)
 def auth():
     data = request.args
     valid = validate(data,cid_user,"cid_app",func=print)
+
     if(valid):
         if("user" in session):
                 site = AppModel.find_id(data["app_id"])
 
                 if(site):
                     auth_code = AuthCode.generate_code(session["user"]["id"],site.id)
+
                     return redirect(site.callback+f"?auth_code={auth_code}")
                 else:
                     abort(400,"app_id does not exist")
         else:
             session["request"] = {"app_id":data["app_id"]}
+
             return redirect("/")
     else:
         abort(400,"app_id unavailable")
@@ -40,6 +43,7 @@ def auth_app():
     data = request.args
     validation_result = {}
     valid = validate(data,cid_app,"cid_app",func=print,result=validation_result)
+
     if(valid):
         site = AppModel.find_id(data["app_id"])
         auth_code = AuthCode.find_code(data["auth_code"],data["app_id"])
@@ -60,6 +64,7 @@ def auth_app():
                 "app_id": data["app_id"],
                 "status": "used"
             }
+
             AuthCode.save(updated_data)
     else:
         payload["validation_result"] = validation_result

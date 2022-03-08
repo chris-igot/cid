@@ -22,12 +22,14 @@ def add_app():
 def add_app_submit():
     form_data = dict(request.form)
     valid = validate(form_data,app_checks,"app")
+
     if(valid):
         form_data["admin_id"] = session["admin"]["id"]
         app_id = secrets.token_urlsafe(16)
         form_data["id"] = app_id
         app_key = secrets.token_urlsafe(16)
         form_data["key"] = bcrypt.generate_password_hash(app_key)
+
         AppModel.save(form_data)
         flash(f"Make sure to copy this key! This is the last and only time you will see this key.",app_id+"gen_key_warning")
         flash(f"<span class='border border-dark rounded p-1'><small class='font-monospace'>{app_key}</small></span>",app_id+"gen_key")
@@ -47,8 +49,10 @@ def edit_app(app_id,app):
 def edit_app_submit(app_id,app):
     form_data = dict(request.form)
     valid = validate(form_data,app_checks,"app")
+
     if valid:
         form_data["id"] = app_id
+
         AppModel.save(form_data)
         return redirect("/admin/dashboard")
     else:
@@ -58,7 +62,6 @@ def edit_app_submit(app_id,app):
 @admin_access_required
 @view_edit_access
 def generate_new_key_ask(app_id,app):
-
     flash(f"Are you sure you want to generate a new key?<br><a href='/admin/apps/{app_id}/genkey' class='btn btn-danger'>confirm</a>",app_id+"gen_key_confirm")
     flash(f"",app_id+"gen_key")
     return redirect(f"/admin/dashboard")
@@ -72,6 +75,7 @@ def generate_new_key(app_id,app):
         "id":app_id,
         "key": bcrypt.generate_password_hash(app_key)
     }
+
     AppModel.save(form_data)
     flash(f"Make sure to copy this key! This is the last and only time you will see this key.",app_id+"gen_key_warning")
     flash(f"<span class='border border-dark rounded p-1'><small class='font-monospace'>{app_key}</small></span>",app_id+"gen_key") 

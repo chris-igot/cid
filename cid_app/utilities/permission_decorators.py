@@ -24,8 +24,10 @@ def view_edit_access(f):
 	@wraps(f)
 	def decorated_function(*args, **kwargs):
 		kwargs["app"] = AppModel.find_id(kwargs["app_id"])
+
 		if not kwargs["app"]:
 			app_id = kwargs["app_id"]
+
 			flash(f"This app_id {app_id} does not exist","access_messages")
 			return redirect(f'/admin/dashboard')
 		if session["admin"]["id"] != kwargs["app"].admin_id: # type: ignore
